@@ -1,7 +1,36 @@
 import ReactGA from "react-ga4";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import ChatIcon from "./components/Chat/ChatIcon";
+import ChatWindow from "./components/Chat/ChatWindow";
 
 const Home = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { text: 'Hello! How can I help you today?', isUser: false }
+  ]);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      setUnreadCount(0);
+    }
+  };
+
+  const handleSendMessage = (message) => {
+    const newMessage = { text: message, isUser: true };
+    setMessages([...messages, newMessage]);
+    
+    // Simulate response after 1 second
+    setTimeout(() => {
+      setMessages(prev => [...prev, { text: 'Thanks for your message!', isUser: false }]);
+      if (!isOpen) {
+        setUnreadCount(prev => prev + 1);
+      }
+    }, 1000);
+  };
+
 
   useEffect(() => {
     ReactGA.send({
@@ -16,6 +45,16 @@ const Home = () => {
 
   return (
     <div className="Home_container">
+      <div>
+      <ChatIcon onClick={toggleChat} unreadCount={unreadCount} />
+      {isOpen && (
+        <ChatWindow 
+          onClose={() => setIsOpen(false)} 
+          messages={messages} 
+          onSendMessage={handleSendMessage} 
+        />
+      )}
+    </div>
       <div className="marginTop"></div>
       <div className="first_para">
                 <p>In the basic texts of Hindu religion, according to the most traditional mythology, Vishnu is one of the three main forms of God. In the Puranas, Trimurti Vishnu is said to be the world's champion. The other two forms of Trinity are considered as Brahma and lord Shiva. Where Brahma is considered to be the creator of the universe, Shiva is considered a destroyer.<br/>

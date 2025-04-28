@@ -33,9 +33,10 @@ const Divyadesangal = () => {
       title: "Divyadesangal"
     });
 
-    fetch(api_url + "/gettemples")
+    fetch(api_url + "/getTemples")
       .then(res => res.json())
       .then(res => {
+        console.log(res)
         setTemples(res);
       });
 
@@ -104,7 +105,7 @@ const Divyadesangal = () => {
       <center><p><b>Click the temple to see more info about it</b></p></center>
       <div className="grid-container">
         {temples.map((temple, index) => (
-          <div key={temple.id} className="grid-item" type="button" data-toggle="modal" data-target="#myModal" onClick={() => setModalContent(temple.title)}>
+          <div key={temple.id} className="grid-item" type="button" data-toggle="modal" data-target="#myModal" onClick={() => setModalContent(temple.name)}>
             <div className="inner-grid">
               {imgUrl[index] ? (
                 <img src={imgUrl[index]} alt={temple.title} />
@@ -112,8 +113,8 @@ const Divyadesangal = () => {
                 <img src="default_image.jpg" alt="default" />
               )}
               <div className="text_container">
-                <p className="desam_name">{temple.title}</p>
-                <p className="desam_loc">Location: {temple.content}</p>
+                <p className="desam_name">{temple.name}</p>
+                <p className="desam_loc">Location: {temple.location}</p>
               </div>
             </div>
           </div>

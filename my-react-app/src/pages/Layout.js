@@ -47,7 +47,10 @@ const Layout = () => {
               <Link to="/Dasavatharam">Dasavatharam</Link>
             </li>
             <li>
-              <Link to="/Songs">Songs</Link>
+            <Link to="/Songs">Songs</Link>
+            </li>
+            <li>
+              <Link to="/AdminPanel">Admin Panel</Link>
             </li>
           </ul>
         </div>

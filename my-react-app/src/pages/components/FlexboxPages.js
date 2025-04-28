@@ -26,13 +26,9 @@ const FlexboxPage = (title) =>  {
 
 
     const addNewContent = (index, i) => {
-        console.log("addnewcontent function called, index-", index);
-        console.log("glosary", glosary);
-        console.log(glosary.length);
         if(index>=0 && index<glosary.length){
             console.log("addnewcontent-if condition passed");
-            const newIndex = index + 1;
-            fetch(api_url + req_title + "/getNewContent/" + newIndex)
+            fetch(api_url + req_title + "/getNewContent/" + glosary[index])
             .then(res => res.json())
             .then( res => {
                 setSubTitle(glosary[index]);

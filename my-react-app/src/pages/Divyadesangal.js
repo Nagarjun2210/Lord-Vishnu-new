@@ -6,6 +6,7 @@ const Divyadesangal = () => {
   const [imgUrl, setImgUrl] = useState([]);
   const [temples, setTemples] = useState([]);
   const api_url = "http://localhost:5030";
+  console.log("divyadesngal render")
 
   const findUrl = async () => {
     // Get all image names from temples
@@ -105,10 +106,10 @@ const Divyadesangal = () => {
       <center><p><b>Click the temple to see more info about it</b></p></center>
       <div className="grid-container">
         {temples.map((temple, index) => (
-          <div key={temple.id} className="grid-item" type="button" data-toggle="modal" data-target="#myModal" onClick={() => setModalContent(temple.name)}>
+          <div key={temple._id} className="grid-item" type="button" data-toggle="modal" data-target="#myModal" onClick={() => setModalContent(temple.name)}>
             <div className="inner-grid">
               {imgUrl[index] ? (
-                <img src={imgUrl[index]} alt={temple.title} />
+                <img src={imgUrl[index]} alt={temple.name} />
               ) : (
                 <img src="default_image.jpg" alt="default" />
               )}

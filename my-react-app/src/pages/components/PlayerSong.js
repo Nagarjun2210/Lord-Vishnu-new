@@ -18,13 +18,14 @@ const Player = ({
 	songInfo, 
 	songs, 
 	setCurrentSong, 
-	id, 
+	_id, 
 	setSongs, 
 }) => { 
+	console.log("ps")
 	//useEffect 
 	const activeLibraryHandler = (nextPrev) => { 
 		const newSongs = songs.map((song) => { 
-			if (song.id === nextPrev.id) { 
+			if (song._id === nextPrev._id) { 
 				return { 
 					...song, 
 					active: true, 
@@ -59,7 +60,7 @@ const Player = ({
 		Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2); 
 	const skipTrackHandler = async (direction) => { 
 		let currentIndex = songs.findIndex( 
-			(song) => song.id === currentSong.id 
+			(song) => song._id === currentSong._id 
 		); 
 		if (direction === "skip-forward") { 
 			await setCurrentSong(songs[(currentIndex + 1) % songs.length]); 

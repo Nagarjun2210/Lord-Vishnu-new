@@ -8,6 +8,7 @@ import ReactGA from "react-ga4";
 import Library from "./components/Library"; 
 
 function Songs() { 
+	console.log("songs")
 	var [songs, setSongs] = useState([]);
 	const [currentSong, setCurrentSong] = useState([]); 
 	const api_url = "http://localhost:5030";
@@ -28,10 +29,6 @@ function Songs() {
 		console.log("songs inside fetch", songs);
 		console.log("songs page rendered");
 	}, []);
-	
-	
-	
-console.log("outside fetch", songs, "url", currentSong.audio);
 
 const [isPlaying, setIsPlaying] = useState(false); 
 const audioRef = useRef(null); 
@@ -40,7 +37,6 @@ const [songInfo, setSongInfo] = useState({
 	duration: 0, 
 	animationPercentage: 0, 
 }); 
-console.log("current song", currentSong);
 
 const timeUpdateHandler = (e) => { 
 	const current = e.target.currentTime; 
@@ -58,13 +54,13 @@ const timeUpdateHandler = (e) => {
 const songEndHandler = () => { 
 	    
 	
-	let currentIndex = songs.findIndex((song) => song.id === currentSong.id); 
+	let currentIndex = songs.findIndex((song) => song._id === currentSong._id); 
 	const currentPlaySong = songs[(currentIndex + 1) % songs.length];
 	setCurrentSong(currentPlaySong);
 	setIsPlaying(true);
 	//Library update
 	const newSongs = songs.map((song) => { 
-		if (song.id === currentPlaySong.id) { 
+		if (song._id === currentPlaySong._id) { 
 			return { 
 				...song, 
 				active: true, 
@@ -107,7 +103,7 @@ return (
 		/>
 		<Player 
 			handleClick={handleClick}
-			id={songs.id} 
+			_id={songs._id} 
 			songs={songs} 
 			songInfo={songInfo} 
 			setSongInfo={setSongInfo} 

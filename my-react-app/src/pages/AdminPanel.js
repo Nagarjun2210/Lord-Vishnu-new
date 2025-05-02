@@ -12,14 +12,19 @@ const AdminChatDashboard = () => {
   const [newMessage, setNewMessage] = useState('');
   const selectedChatRef = useRef(null);
   const [socket, setSocket] = useState(null);  // <-- New
+  const messagesEndRef = useRef(null);
+
+  console.log("message", selectedChat);
 
   // Fetch chats from server
   useEffect(() => {
     selectedChatRef.current = selectedChat;
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [selectedChat]);
   
   useEffect(() => {
     loadChats();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 
     // Setup socket connection
     const newSocket = io(API_URL);
@@ -67,11 +72,11 @@ const AdminChatDashboard = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, [selectedChat?.id]);
+  }, []);
 
   const loadChats = () => {
     setIsLoading(true);
-    fetch(`${API_URL}/getchats`)
+    fetch(`${API_URL}/getchatsA`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch chats');
@@ -132,6 +137,7 @@ const AdminChatDashboard = () => {
       console.error('Error updating status:', error);
     }
   };
+  console.log("selectedChat", selectedChat)
 
   return (
     <div className="admin-dashboard">
@@ -227,7 +233,7 @@ const AdminChatDashboard = () => {
               </div>
 
               <div className="message-history">
-                {[...selectedChat.messages]
+                {[...selectedChat?.messages]
                   .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
                   .map((msg) => (
                     <div key={msg.id} className={`message ${msg.sender === 'user' ? 'user' : 'agent'}`}>
@@ -239,6 +245,7 @@ const AdminChatDashboard = () => {
                       </div>
                     </div>
                   ))}
+                  <div ref={messagesEndRef} />
               </div>
 
               <div className="message-input">

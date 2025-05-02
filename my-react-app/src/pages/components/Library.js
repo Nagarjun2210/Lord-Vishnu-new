@@ -12,6 +12,7 @@ const Library = ({
 	setIsPlaying,
 	setSongs,  
 }) => { 
+	console.log("l")
 	return ( 
 		<div className="container">
 			<div className="library"> 
@@ -27,8 +28,8 @@ const Library = ({
 							songs={songs} 
 							song={song} 
 							setCurrentSong={setCurrentSong} 
-							id={song.id} 
-							key={song.id} 
+							_id={song._id} 
+							key={song._id} 
 						/> 
 					))} 
 				</div> 

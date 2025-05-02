@@ -100,10 +100,22 @@ app.get('/getSongs', async (req, res) => {
 });
 
 // Get all chats
-app.get('/getchats', async (req, res) => {
+app.get('/getchatsA', async (req, res) => {
   try {
     const db = await getDb();
     const chats = await db.collection('Chat').find({}).toArray();
+    res.json(chats);
+  } catch (err) {
+    console.error('Error fetching chats:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get all chats
+app.get('/getchatsU/:userId', async (req, res) => {
+  try {
+    const db = await getDb();
+    const chats = await db.collection('Chat').findOne({ id: req.params.userId });
     res.json(chats);
   } catch (err) {
     console.error('Error fetching chats:', err);
